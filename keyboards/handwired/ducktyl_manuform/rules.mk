@@ -32,3 +32,6 @@ RGBLIGHT_ENABLE = no       # Enable WS2812 RGB underlight.
 SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
 SPLIT_KEYBOARD = yes
+
+# Enable support for rotary encoders
+ENCODER_ENABLE = yes 

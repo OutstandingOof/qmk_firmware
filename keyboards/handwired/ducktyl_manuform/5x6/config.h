@@ -41,3 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* number of backlight levels */
 // #define BACKLIGHT_LEVELS 3
+
+// wiring of the encoder (right side)
+#define ENCODERS_PAD_A { F4 }
+#define ENCODERS_PAD_B { F5 }
