@@ -21,8 +21,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_LSFT, KC_A  , KC_S  , KC_D  , KC_F  , KC_G  ,                         KC_H  , KC_J  , KC_K  , KC_L  ,KC_SCLN,KC_LSFT,
      KC_LCTL, KC_Z  , KC_X  , KC_C  , KC_V  , KC_B  ,                         KC_N  , KC_M  ,KC_COMM,KC_DOT ,KC_SLSH,KC_BSLASH,
                       KC_LBRC,KC_RBRC,                                                       KC_PLUS, KC_EQL,
-                                      TG(_GAME),KC_SPC,                       KC_ENT, LOWER,
-                                      KC_LGUI,KC_ESC,                        KC_BSPC,KC_LGUI,
+                                      RAISE ,KC_SPC ,                         KC_ENT, LOWER,
+                                      KC_LGUI,KC_ESC,                         KC_BSPC,KC_LGUI,
                                       KC_BSPC, KC_GRV,                        KC_MPLY,KC_LALT
   ), 
 
@@ -32,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_LSFT, KC_A  , KC_O  , KC_E  , KC_U  , KC_I  ,                         KC_D  , KC_H  , KC_T  , KC_N  , KC_S  ,KC_LSFT,
      KC_LCTL, KC_Z  , KC_Q  , KC_J  , KC_K  , KC_X  ,                         KC_B  , KC_M  , KC_W  , KC_V  , KC_Z  ,KC_BSLASH,
                       KC_LBRC,KC_RBRC,                                                       KC_PLUS, KC_EQL,
-                                      TG(_GAME),KC_SPC,                       KC_ENT, LOWER,
+                                      RAISE ,KC_SPC,                       KC_ENT, LOWER,
                                       KC_LGUI,KC_ESC,                        KC_BSPC,KC_LGUI,
                                       KC_BSPC, KC_GRV,                        KC_MPLY,KC_LALT
   ),
@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT_5x6(
        KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                        KC_F6  , KC_F7 , KC_F8 , KC_F9 ,KC_F10 ,KC_F11 ,
-       _______,_______,_______,_______,_______,KC_LBRC,                        KC_RBRC,_______,KC_NLCK,KC_INS ,KC_SLCK,KC_MUTE,
+       _______,_______,_______,_______,_______,KC_LBRC,                        KC_RBRC,TO(_GAME),KC_NLCK,KC_INS ,KC_SLCK,KC_MUTE,
        _______,KC_LEFT,KC_UP  ,KC_DOWN,KC_RGHT,KC_LPRN,                        KC_RPRN,KC_MPRV,KC_MPLY,KC_MNXT,_______,KC_VOLU,
        _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,KC_VOLD,
                                                _______,_______,            KC_EQL ,_______,
@@ -81,3 +81,32 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         }
 }
 
+#ifdef OLED_DRIVER_ENABLE
+void oled_task_user(void) {
+  // Host Keyboard Layer Status
+  oled_write_P(PSTR("Layer: "), false);
+  switch (get_highest_layer(layer_state)) {
+    case _QWERTY:
+      oled_write_P(PSTR("Default\n"), false);
+      break;
+    case _RAISE:
+      oled_write_P(PSTR("FN\n"), false);
+      break;
+    case _LOWER:
+      oled_write_P(PSTR("ADJ\n"), false);
+      break;
+    case _GAME:
+      oled_write_P(PSTR("GAME\n"), false);
+      break;
+    default:
+      // Or use the write_ln shortcut over adding '\n' to the end of your string
+      oled_write_ln_P(PSTR("Undefined"), false);
+  }
+
+  // Host Keyboard LED Status
+  uint8_t led_usb_state = host_keyboard_leds();
+  oled_write_P(led_usb_state & (1<<USB_LED_NUM_LOCK) ? PSTR("NUMLCK ") : PSTR("       "), false);
+  oled_write_P(led_usb_state & (1<<USB_LED_CAPS_LOCK) ? PSTR("CAPLCK ") : PSTR("       "), false);
+  oled_write_P(led_usb_state & (1<<USB_LED_SCROLL_LOCK) ? PSTR("SCRLCK ") : PSTR("       "), false);
+}
+#endif
