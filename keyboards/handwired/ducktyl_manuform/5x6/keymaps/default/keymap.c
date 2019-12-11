@@ -8,6 +8,7 @@ extern keymap_config_t keymap_config;
 #define _DVORAK 0
 #define _LOWER 2
 #define _RAISE 3
+#define _MOUSE 4
 #define _GAME 5
 
 #define RAISE MO(_RAISE)
@@ -54,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                        KC_F6  , KC_F7 , KC_F8 , KC_F9 ,KC_F10 ,KC_F11 ,
        _______,_______,_______,_______,_______,KC_LBRC,                        KC_RBRC,TO(_GAME),KC_NLCK,KC_INS ,KC_SLCK,KC_MUTE,
        _______,KC_LEFT,KC_UP  ,KC_DOWN,KC_RGHT,KC_LPRN,                        DF(_DVORAK),KC_MPRV,KC_MPLY,KC_MNXT,_______,KC_VOLU,
-       _______,_______,DF(_QWERTY),_______,_______,_______,                    _______,_______,_______,_______,_______,KC_VOLD,
+       _______,_______,DF(_QWERTY),_______,_______,_______,                    _______,TO(_MOUSE),_______,_______,_______,KC_VOLD,
                                                _______,_______,            KC_EQL ,_______,
                                                _______,_______,            _______,_______,
                                                _______,_______,            _______,_______,
@@ -62,23 +63,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ), 
 
   [_GAME] = LAYOUT_5x6(
-     _______, KC_5  , KC_1  , KC_2  , KC_3  , KC_4  ,                         _______,_______,_______,_______,_______,_______,
+     _______, KC_5  , KC_1  , KC_2  , KC_3  , KC_4  ,                         _______,_______,_______,_______,_______,TG(_GAME),
      _______, KC_TAB, KC_Q  , KC_W  , KC_E  , KC_R  ,                         _______,_______,_______,_______,_______,_______,
      _______, KC_LSFT,KC_A  , KC_S  , KC_D  , KC_F  ,                         _______,KC_MPRV,KC_MPLY,KC_MNXT,_______,_______,
      _______, KC_B  , KC_Z  , KC_X  , KC_C  , KC_V  ,                         _______,_______,_______,_______,_______,_______,
                      _______,_______,                                                         _______,_______,
                                       KC_LALT ,KC_SPC,                        _______,_______,
                                       _______,  KC_G ,                        _______,_______,
-                                      _______, TG(_GAME),                     _______,_______
+                                      _______,_______,                     _______,_______
+  ),
+
+  [_MOUSE] = LAYOUT_5x6(
+     _______,_______,_______,_______,_______,_______,                         _______,_______,_______,_______,_______,TG(_MOUSE),
+     _______,_______,_______,KC_MS_U,_______,_______,                         _______,_______,_______,_______,_______,_______,
+     _______,_______,KC_MS_L,KC_MS_D,KC_MS_R,_______,                         _______,KC_BTN1,KC_BTN2,_______,_______,_______,
+     _______,_______,_______,_______,_______,_______,                         _______,_______,_______,_______,_______,_______,
+                     _______,_______,                                                         _______,_______,
+                                      _______,_______,                        _______,_______,
+                                      _______,_______,                        _______,_______,
+                                      _______,_______,                        _______,_______
   ),
 };
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
-        }
+	switch (get_highest_layer(layer_state)) {
+		case _MOUSE:
+			if (clockwise) {
+				tap_code(KC_WH_U);
+				break;
+			} else {
+				tap_code(KC_WH_D);
+				break;
+			}
+		default:
+			if (clockwise) {
+				tap_code(KC_VOLU);
+			} else {
+				tap_code(KC_VOLD);
+			}
+	}
 }
 
 #ifdef OLED_DRIVER_ENABLE
@@ -90,10 +113,10 @@ void oled_task_user(void) {
       oled_write_P(PSTR("QWERTY\n"), false);
       break;
     case _RAISE:
-      oled_write_P(PSTR("FN\n"), false);
+      oled_write_P(PSTR("RAISE\n"), false);
       break;
     case _LOWER:
-      oled_write_P(PSTR("ADJ\n"), false);
+      oled_write_P(PSTR("LOWER\n"), false);
       break;
     case _GAME:
       oled_write_P(PSTR("GAME\n"), false);
