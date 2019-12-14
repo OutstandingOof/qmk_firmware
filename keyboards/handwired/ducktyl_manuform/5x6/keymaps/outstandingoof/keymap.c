@@ -65,8 +65,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_GAME] = LAYOUT_5x6(
      _______, KC_5  , KC_1  , KC_2  , KC_3  , KC_4  ,                         _______,_______,_______,_______,_______,TG(_GAME),
      _______, KC_TAB, KC_Q  , KC_W  , KC_E  , KC_R  ,                         _______,_______,_______,_______,_______,_______,
-     _______, KC_LSFT,KC_A  , KC_S  , KC_D  , KC_F  ,                         _______,KC_MPRV,KC_MPLY,KC_MNXT,_______,_______,
-     _______, KC_B  , KC_Z  , KC_X  , KC_C  , KC_V  ,                         _______,_______,_______,_______,_______,_______,
+     _______, KC_LSFT,KC_A  , KC_S  , KC_D  , KC_F  ,                           KC_H ,KC_MPRV,KC_MPLY,KC_MNXT,_______,_______,
+     _______, KC_B  , KC_Z  , KC_X  , KC_C  , KC_V  ,                           KC_B ,_______,_______,_______,_______,_______,
                      _______,_______,                                                         _______,_______,
                                       KC_LALT ,KC_SPC,                        _______,_______,
                                       _______,  KC_G ,                        _______,_______,
@@ -120,6 +120,9 @@ void oled_task_user(void) {
       break;
     case _GAME:
       oled_write_P(PSTR("GAME\n"), false);
+      break;
+	case _MOUSE:
+      oled_write_P(PSTR("MOUSE\n"), false);
       break;
     case _DVORAK:
       oled_write_P(PSTR("DVORAK\n"), false);
