@@ -1,28 +1,28 @@
-Dactyl Manuform (4x5, 5x6, 5x7, 6x6)
+Ducktyl Manuform (5x6, more versions maybe added later)
 ======
-the [Dactyl-Manuform](https://github.com/tshort/dactyl-keyboard) is a split curved keyboard based on the design of [adereth dactyl](https://github.com/adereth/dactyl-keyboard) and thumb cluster design of the [manuform](https://geekhack.org/index.php?topic=46015.0) keyboard, the hardware is similar to the let's split keyboard. all information needed for making one is in the first link.
-![Imgur](https://i.imgur.com/7y0Vbyd.jpg)
+The [Ducktyl-Manuform](https://github.com/OutstandingOof/ducktyl-manuform) is a split curved keyboard with an OLED display based on the [Dactyl-Manuform](https://github.com/tshort/dactyl-keyboard) and its predecessors. All Information to build one is in the first link. 
 
+![Imgur](https://i.imgur.com/VhYYnnR.jpg)
 
 ## First Time Setup
 
-Download or clone the `qmk_firmware` repo and navigate to its top level directory. Once your build environment is setup, you'll be able to generate the default .hex using:
+Download or clone OutstandigOof's `qmk_firmware` repo, navigate to its top level directory and switch to the `ducktyl_manuform` branch (`git checkout ducktyl_manuform`), as it is currently not in the main QMK repository (I'll change that soon). Once your build environment is setup, you'll be able to generate the default .hex using:
 
 Depending on your Layout chose one of the follwing commands:
 
 ```
-$ make handwired/dactyl_manuform/YOUR_LAYOUT:YOUR_KEYMAP_NAME
+$ make handwired/ducktyl_manuform/YOUR_LAYOUT:YOUR_KEYMAP_NAME
 ```
 
 example:
 ```
-$ make handwired/dactyl_manuform/4x5:default
+$ make handwired/ducktyl_manuform/4x5:default
 ```
 
 If everything worked correctly you will see a file:
 
 ```
-dactyl_manuform_YOUR_LAYOUT_YOUR_KEYMAP_NAME.hex
+ducktyl_manuform_YOUR_LAYOUT_YOUR_KEYMAP_NAME.hex
 ```
 
 For more information on customizing keymaps, take a look at the primary documentation for [Customizing Your Keymap](/docs/faq_keymap.md) in the main readme.md.
@@ -30,28 +30,13 @@ For more information on customizing keymaps, take a look at the primary document
 
 ## Keymaps
 
-### [Keymaps 4x5](/keyboards/handwired/dactyl_manuform/4x5/keymaps/)
-
-#### Default
-Simple QWERTY layout with 3 Layers.
-#### Dvorak
-
 ### [Keymaps 5x6](/keyboards/handwired/dactyl_manuform/5x6/keymaps/)
 
 #### Default
-Just a copy of the Impstyle keymap. Feel free to adjust it.
+Copy of the Dactyl Manuform's default keymap with OLED and rotary encoder support + layers GAME and MOUSE.
 
-#### Impstyle
-A simple QWERTY keymap with 3 Layers. Both sides are connected via serial and the Left ist the master.
-
-### [Keymaps 5x7 aka almost Ergodox](/keyboards/handwired/dactyl_manuform/5x7/keymaps/)
-#### Default
-Keymap of Loligagger from geekhack.
-
-### [Keymaps 6x6](/keyboards/handwired/dactyl_manuform/6x6/keymaps/)
-
-#### Default
-Simple QWERTY layout with 3 Layers.
+#### OutstandingOof
+Dvorak keymap changed to go well with a German layout and i3 (linux window manager). 
 
 ## Required Hardware
 
@@ -59,40 +44,22 @@ Apart from diodes and key switches for the keyboard matrix in each half, you
 will need:
 
 * 2 Arduino Pro Micros. You can find these on AliExpress for ≈3.50USD each.
-* 2 TRRS sockets and 1 TRRS cable, or 2 TRS sockets and 1 TRS cable
+* 2 TRRS sockets and 1 TRRS cable, or 2 TRS sockets and 1 TRS cable 
+* 1 SSD1603 0.91" OLED display 
 
 Alternatively, you can use any sort of cable and socket that has at least 3
-wires. If you want to use I2C to communicate between halves, you will need a
-cable with at least 4 wires and 2x 4.7kΩ pull-up resistors
-
+wires. I2C communication betveen halves isn't possible due to I2C already being used for the OLED. 
 ## Optional Hardware
-A speaker can be hooked-up to either side to the `5` (`C6`) pin and `GND`, and turned on via `AUDIO_ENABLE`.
+A speaker can be hooked-up to either side to the `A2` (`F5`) pin and `GND`, and turned on via `AUDIO_ENABLE`.
+Rotary encodes can be added by connecting them to `A3` (`F4`), `A2` (`F5`) and `GND`. Follow the steps on [QMK's guide page](https://docs.qmk.fm/#/feature_encoders) to use them in your keymap. 
 
 ## Wiring
 
-The 3 wires of the TRS/TRRS cable need to connect GND, VCC, and digital pin 3 (i.e.
-PD0 on the ATmega32u4) between the two Pro Micros.
+The 3 wires of the TRS/TRRS cable need to connect GND, VCC, and digital pin `RX1` (i.e.
+`PD2` on the ATmega32u4) between the two Pro Micros. Make sure to wire `GND` to `GND`, `VCC` to `VCC` and `RX1` to `RX1` on the two boards. 
 
 Next, wire your key matrix to any of the remaining 17 IO pins of the pro micro
 and modify the `matrix.c` accordingly.
-
-The wiring for serial:
-
-![serial wiring](https://i.imgur.com/C3D1GAQ.png)
-
-The wiring for i2c:
-
-![i2c wiring](https://i.imgur.com/Hbzhc6E.png)
-
-The pull-up resistors may be placed on either half. It is also possible
-to use 4 resistors and have the pull-ups in both halves, but this is
-unnecessary in simple use cases.
-
-You can change your configuration between serial and i2c by modifying your `config.h` file.
-
-## Notes on Software Configuration
-
-the keymaps in here are for the 4x5 layout of the keyboard only.
 
 ## Flashing
 
