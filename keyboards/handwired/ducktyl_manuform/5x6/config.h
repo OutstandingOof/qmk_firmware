@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 
-#define PRODUCT         Dactyl-Manuform (5x6)
+#define PRODUCT         Ducktyl-Manuform (5x6)
 
 /* key matrix size */
 // Rows are doubled-up
