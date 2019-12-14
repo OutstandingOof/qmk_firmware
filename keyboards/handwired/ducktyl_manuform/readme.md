@@ -30,7 +30,7 @@ For more information on customizing keymaps, take a look at the primary document
 
 ## Keymaps
 
-### [Keymaps 5x6](/keyboards/handwired/dactyl_manuform/5x6/keymaps/)
+### [Keymaps 5x6](/keyboards/handwired/ducktyl_manuform/5x6/keymaps/)
 
 #### Default
 Copy of the Dactyl Manuform's default keymap with OLED and rotary encoder support + layers GAME and MOUSE.
