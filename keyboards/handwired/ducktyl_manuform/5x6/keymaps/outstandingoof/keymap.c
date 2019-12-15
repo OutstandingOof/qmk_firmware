@@ -1,4 +1,4 @@
-/* A standard layout for the Ducktyl Manuform 5x6 Keyboard */ 
+/* OutstandingOof's firmware built for a German layout, i3 and the dvorak layout*/
 
 #include QMK_KEYBOARD_H
 
