@@ -27,3 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Rows are doubled-up
 
 #define ENCODER_RESOLUTION 2
+
+// set Toggle to two presses
+#define TAPPING_TOGGLE 2

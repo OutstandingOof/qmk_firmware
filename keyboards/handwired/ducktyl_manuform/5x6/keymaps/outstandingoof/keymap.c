@@ -53,8 +53,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT_5x6(
        KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                        KC_F6  , KC_F7 , KC_F8 , KC_F9 ,KC_F10 ,KC_F11 ,
-       _______,_______,_______,_______,_______,KC_LBRC,                        KC_RBRC,TO(_GAME),KC_NLCK,KC_INS ,KC_SLCK,KC_MUTE,
-       _______,KC_LEFT,KC_UP  ,KC_DOWN,KC_RGHT,KC_LPRN,                        DF(_DVORAK),KC_MPRV,KC_MPLY,KC_MNXT,_______,KC_VOLU,
+       _______,_______,_______, KC_UP ,_______,KC_LBRC,                        KC_RBRC,TO(_GAME),KC_NLCK,KC_INS ,KC_SLCK,KC_MUTE,
+       _______,_______,KC_LEFT,KC_DOWN,KC_RGHT,KC_LPRN,                        DF(_DVORAK),KC_MPRV,KC_MPLY,KC_MNXT,_______,KC_VOLU,
        _______,_______,DF(_QWERTY),_______,_______,_______,                    _______,TO(_MOUSE),_______,_______,_______,KC_VOLD,
                                                _______,_______,            KC_EQL ,_______,
                                                _______,_______,            _______,_______,
