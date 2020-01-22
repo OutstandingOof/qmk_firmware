@@ -12,7 +12,7 @@ extern keymap_config_t keymap_config;
 #define _GAME 5
 
 #define RAISE MO(_RAISE)
-#define LOWER MO(_LOWER)
+#define LOWER TT(_LOWER)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
